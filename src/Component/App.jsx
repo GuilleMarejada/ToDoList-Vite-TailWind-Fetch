@@ -8,7 +8,7 @@ function App({}) {
   const [tasks, setTasks] = useState([]);
   const [userName, setUserName] = useState("");
   console.log("input", taskInput);
-  console.log("save", tasks);
+  console.log("Save", tasks);
 
   const inputValue = (event) => {
     setTaskInput(event.target.value);
