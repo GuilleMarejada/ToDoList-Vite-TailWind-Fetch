@@ -1,14 +1,29 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-
 const User = ({ setUserName }) => {
   const [userInput, setUserInput] = useState("");
-  console.log(userInput);
+
+  const newUser = async (username) => {
+    try {
+      const response = await fetch(
+        `https://playground.4geeks.com/todo/users/${username}`,
+        {
+          method: "POST",
+        }
+      );
+      await response.json();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const createUser = (event) => {
-    if (event.code == "Enter") {
+    if (event.key === "Enter" && userInput.trim() !== "") {
       setUserName(userInput);
+      newUser(userInput);
+      setUserInput("");
     }
   };
 
@@ -27,13 +42,15 @@ const User = ({ setUserName }) => {
         placeholder="Introducir nombre de Usuario"
         onKeyDown={createUser}
         onChange={inputUser}
+        value={userInput}
       />
     </div>
   );
 };
 
 User.propTypes = {
-  setUserName: PropTypes.func
+  setUserName: PropTypes.func.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 export default User;
